@@ -1,0 +1,8 @@
+.idea/
+/qualifying round/node_modules/
+/qualifying round/package-lock.json
+/qualifying round/package.json
+.venv/
+/qualifying round/.ipynb_checkpoints/
+models/pretrained_model.pkl
+/venv/
