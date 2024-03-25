@@ -6,3 +6,6 @@
 /qualifying round/.ipynb_checkpoints/
 models/pretrained_model.pkl
 /venv/
+data/
+outputs/.DS_Store
+.DS_Store
