@@ -2,3 +2,4 @@ venv/
 .idea/
 /VKBot/tokenBot.py
 /server/models/tonality_model/best_model.pkl
+.gitignore

@@ -1,14 +1,13 @@
-
 FROM python:3.9
 
-COPY *.py /app/
-COPY requirements.txt /app/
 
-WORKDIR /app/
+WORKDIR /code
 
-RUN pip install -r requirements.txt
+COPY ./requirements.txt /code/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+COPY ./server /code/server
 
 
-EXPOSE 80
-
-CMD ["uvicorn", "server:app", "--reload", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "server.main:app", "--reload", "--host", "0.0.0.0", "--port", "80"]
