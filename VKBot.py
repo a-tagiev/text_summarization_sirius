@@ -1,7 +1,7 @@
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import random
-from Bots.Summary.Model.model import summarize_text
+from Model.model import summarize_text
 
 # Укажите токен вашего сообщества VK
 token = 'vk1.a.EWzgRDyuBxOuLGtHqS-S6vwyjGKZWsWjJ3WbyY2AhHJhfO_AszbEV1oDIXk83zX62zekUZzGNyS8qzXT1bvjH7kHyGWomE3KOzwmRQePJyXizInKu46W3vR6mXVWacdShVwYQpyCbYRBIp1pq1qI28IggEU3pUcCmhI17XmlThlDiDrB6xR5AzDf7W-ZmNQd-VZZBvJ6hi6Mx97_J2_kRw'

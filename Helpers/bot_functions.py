@@ -1,4 +1,4 @@
-from Bots.Summary.Helpers.tokenBot import FastApi_URL
+from Helpers.tokenBot import FastApi_URL
 import aiohttp
 import asyncio
 

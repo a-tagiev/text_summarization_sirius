@@ -1,4 +1,4 @@
-from Bots.Summary.Model.model import summarize_text
+from Model.model import summarize_text
 
 
 def make_summary(text_to_summary):

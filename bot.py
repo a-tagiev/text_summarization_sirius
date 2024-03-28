@@ -1,9 +1,9 @@
 import vk_api
 import random
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-import Bots.Summary.Helpers.bot_functions as bot
-import Bots.Summary.Helpers.functions as functions
-from Bots.Summary.Helpers.tokenBot import main_token, group_id, FastApi_URL
+import Helpers.bot_functions as bot
+import Helpers.functions as functions
+from Helpers.tokenBot import main_token, group_id, FastApi_URL
 
 
 
