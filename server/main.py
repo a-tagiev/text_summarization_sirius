@@ -1,8 +1,9 @@
 import uvicorn
 
-from model import model
+from models import tonality_model
 from fastapi import FastAPI
 from pydantic import BaseModel
+from vk_bot_output import vk_bot
 
 
 app = FastAPI()
@@ -10,6 +11,7 @@ app = FastAPI()
 
 class TextInput(BaseModel):
     text: str
+    chat_id: int
 
 
 class PredictOutput(BaseModel):
@@ -21,10 +23,10 @@ def home():
     return {"message": "OK"}
 
 
-@app.post("/predict", response_model=PredictOutput)
+@app.post("/text_tonality", response_model=PredictOutput)
 async def predict_status(input: TextInput):
-    status = model.predict_pipeline(input.text)
-    return {"predict": status[0]["label"]}
+    predict_tonality = tonality_model.model.tonality_predict(input.text)
+    vk_bot.sender(input.chat_id, predict_tonality["label"].lower())
 
 
 if __name__ == "__main__":

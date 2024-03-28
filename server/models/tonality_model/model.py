@@ -5,10 +5,10 @@ import pickle
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-with open(f"{BASE_DIR}/pretrained_model.pkl", "rb") as f:
+with open(f"{BASE_DIR}/best_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
-def predict_pipeline(text):
+def tonality_predict(text):
     pred = model.predict(text)
-    return pred
+    return pred[0]
