@@ -14,16 +14,12 @@ class TextInput(BaseModel):
     chat_id: int
 
 
-class PredictOutput(BaseModel):
-    predict: str
-
-
 @app.get("/")
 def home():
     return {"message": "OK"}
 
 
-@app.post("/text_tonality", response_model=PredictOutput)
+@app.post("/text_tonality")
 async def predict_status(input: TextInput):
     predict_tonality = tonality_model.model.tonality_predict(input.text)
     vk_bot.sender(input.chat_id, predict_tonality["label"].lower())

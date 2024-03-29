@@ -51,24 +51,24 @@ def handle_request(event):
 
 def help_command(event):
     print("help")
-
-
-def summary_command(event):
-    tagged_message = find_tagged_message(event)  # ищем тегнутое сообщение
-    if tagged_message:
-        chat_id = event.chat_id
-        start_message_id = tagged_message['date']  # беру айди тегнутого - стартового собщения
-        messages = bot.get_message_history(chat_id, start_message_id, vk)  # беру все сообщения
-
-        for message in messages[::-1]:  # перебираю все сообщения чата :(
-            if message['date'] >= start_message_id:  # только сообщения, которые поступили после тегнутого
-                if not functions.check_ai_marker(message['text']):
-                    select_messages += message['text'] + " "  # пополняю текст для суммаризации
-                    select_messages_count += 1
-
-        bot.process_request({"select_messages": select_messages,
-                             'select_messages_count': select_messages_count,
-                             'chat_id': chat_id})
+#
+#
+# def summary_command(event):
+#     tagged_message = find_tagged_message(event)  # ищем тегнутое сообщение
+#     if tagged_message:
+#         chat_id = event.chat_id
+#         start_message_id = tagged_message['date']  # беру айди тегнутого - стартового собщения
+#         messages = bot.get_message_history(chat_id, start_message_id, vk)  # беру все сообщения
+#
+#         for message in messages[::-1]:  # перебираю все сообщения чата :(
+#             if message['date'] >= start_message_id:  # только сообщения, которые поступили после тегнутого
+#                 if not functions.check_ai_marker(message['text']):
+#                     select_messages += message['text'] + " "  # пополняю текст для суммаризации
+#                     select_messages_count += 1
+#
+#         bot.process_request({"select_messages": select_messages,
+#                              'select_messages_count': select_messages_count,
+#                              'chat_id': chat_id})
 
 
 
