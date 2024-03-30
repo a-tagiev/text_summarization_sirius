@@ -3,3 +3,5 @@ venv/
 /VKBot/tokenBot.py
 /server/models/tonality_model/best_model.pkl
 .gitignore
+server/__pycache__
+server/vk_bot_output/__pycache__
