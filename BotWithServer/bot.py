@@ -10,7 +10,7 @@ vk = vk_session.get_api()
 longpoll = VkBotLongPoll(vk_session, group_id)
 upload = vk_api.VkUpload(vk_session)
 
-print("Bot started")
+print("Bot has started")
 
 
 def handle_request(event):
