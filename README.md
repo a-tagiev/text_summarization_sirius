@@ -26,14 +26,6 @@ python BotWithServer/bot.py
 python Server/main.py
 ```
 
-## Демонстрация работы
-
-
-Ссылка на видео работы бота: [Видео](http://study.fra1l.ru/video.mp4)
-
-Ссылка на группу бота: [Группа](https://vk.com/club225246870) 
-
-Ссылка на чат для теста бота: [Чат](https://vk.me/join/GL6Z6ykiEiaOEJEQwMNbBrSjpDHADQLrFBg=) 
 
 ### Пример суммаризаций
 
