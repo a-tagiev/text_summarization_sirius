@@ -1,0 +1,146 @@
+version: "3"
+
+services:
+  rabbit_mq:
+    image: rabbitmq:3.8-rc-management
+    container_name: rabbit_mq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - rabbit_mqdata:/usr/share/rabbitmq/data
+
+
+  transmitter1:
+    build: Backend/transmitter
+    container_name: transmitter1
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Backend/transmitter:/usr/src/app/Backend/transmitter
+    restart: always
+
+  transmitter2:
+    build: Backend/transmitter
+    container_name: transmitter2
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Backend/transmitter:/usr/src/app/Backend/transmitter
+    restart: always
+
+
+  app1:
+    build: Backend/app
+    container_name: app1
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8003 --reload"
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    depends_on:
+      - rabbit_mq
+      - transmitter1
+      - transmitter2
+    ports:
+      - 8003:8003
+    volumes:
+      - ./Backend/app:/Backend/app
+
+  app2:
+    build: Backend/app
+    container_name: app2
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8004 --reload"
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    depends_on:
+      - rabbit_mq
+      - transmitter1
+      - transmitter2
+    ports:
+      - 8004:8004
+    volumes:
+      - ./Backend/app:/Backend/app
+
+
+  app3:
+    build: Backend/app
+    container_name: app3
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8005 --reload"
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    depends_on:
+      - rabbit_mq
+      - transmitter1
+      - transmitter2
+    ports:
+      - 8005:8005
+    volumes:
+      - ./Backend/app:/Backend/app
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    depends_on:
+      - app1
+      - app2
+      - app3
+    ports:
+      - 8001:8001
+      - 8002:8002
+    volumes:
+      - ./Backend/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+
+
+  vk_bot_input:
+    build: Frontend/VkBot/input
+    container_name: vk_bot_input
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Frontend/VkBot/input:/usr/src/app/Frontend/VkBot/input
+    restart: always
+
+  vk_bot_output:
+    build: Frontend/VkBot/output
+    container_name: vk_bot_output
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Frontend/VkBot/output:/usr/src/app/Frontend/VkBot/output
+    restart: always
+
+
+
+  tg_bot_input:
+    build: Frontend/TgBot/input
+    container_name: tg_bot_input
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Frontend/TgBot/input:/usr/src/app/Frontend/TgBot/input
+    restart: always
+
+  tg_bot_output:
+    build: Frontend/TgBot/output
+    container_name: tg_bot_output
+    depends_on:
+      - rabbit_mq
+    environment:
+      AMQP_URL: 'amqp://rabbit_mq?connection_attempts=10&retry_delay=10'
+    volumes:
+      - ./Frontend/TgBot/output:/usr/src/app/Frontend/TgBot/output
+    restart: always
+
+
+volumes:
+    rabbit_mqdata:
+      driver: local
